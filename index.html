@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101418">
+  <meta name="description" content="WARDOGS community player stats, wealth leaderboards, and server links.">
+  <title>WARDOGS | Community Hub</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#dashboard" aria-label="WARDOGS Community Hub home">
+        <span class="brand-mark">W</span>
+        <span><strong id="community-name">WARDOGS</strong><small>COMMUNITY HUB</small></span>
+      </a>
+      <div class="top-status"><span class="pulse"></span><span id="connection-label">CONNECTING TO STATS</span></div>
+    </header>
+
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">COMMUNITY OPERATIONS</div>
+        <h1>Know your squad.<br><span>Find your next fight.</span></h1>
+        <p>Player stats, cash and gold rankings, and community server links in one place.</p>
+        <div class="hero-actions">
+          <button class="button button-primary" data-nav="players">VIEW PLAYERS <span>↗</span></button>
+          <button class="button button-quiet" data-nav="servers">SERVER DIRECTORY</button>
+        </div>
+      </div>
+      <div class="hero-emblem" aria-hidden="true"><div class="emblem-ring"><span>W</span></div><div class="emblem-caption">WARDOGS<br>COMMUNITY</div></div>
+    </div>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <button class="nav-item active" data-nav="dashboard">OVERVIEW</button>
+      <button class="nav-item" data-nav="players">PLAYER DIRECTORY</button>
+      <button class="nav-item" data-nav="wealth">WEALTH RANKINGS</button>
+      <button class="nav-item" data-nav="servers">SERVERS</button>
+    </nav>
+
+    <main>
+      <section id="view-dashboard" class="view active">
+        <div class="section-heading">
+          <div><div class="eyebrow">SITUATION REPORT</div><h2>Community overview</h2></div>
+          <div class="refresh-note"><span class="pulse"></span> PUBLIC STATS FEED <span id="last-updated">Waiting for data</span></div>
+        </div>
+        <div class="stat-grid">
+          <article class="stat-card"><div class="stat-label">TRACKED PLAYERS</div><div class="stat-value" id="metric-players">—</div><div class="stat-foot">Profiles available from WARDOGS Tracker</div></article>
+          <article class="stat-card"><div class="stat-label">TOP PLAYER CASH</div><div class="stat-value" id="metric-cash">—</div><div class="stat-foot">Highest visible cash balance</div></article>
+          <article class="stat-card"><div class="stat-label">TOP PLAYER GOLD</div><div class="stat-value" id="metric-gold">—</div><div class="stat-foot">Highest visible gold balance</div></article>
+          <article class="stat-card"><div class="stat-label">GAME STATUS</div><div class="stat-value status-value" id="metric-status">CHECKING</div><div class="stat-foot" id="metric-status-detail">Checking public status feed</div></article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="panel-heading"><div><div class="eyebrow">TOP PERFORMERS</div><h3>Cash leaders</h3></div><button class="text-button" data-nav="wealth" data-sort="cash">FULL RANKING ↗</button></div>
+            <div id="dashboard-cash" class="compact-list"><div class="loading-row">Loading public leaderboard…</div></div>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><div><div class="eyebrow">COMMUNITY SETUP</div><h3>Make this yours</h3></div><span class="panel-icon">✦</span></div>
+            <ul class="setup-list">
+              <li><span class="setup-number">01</span><div><strong>Add your members</strong><p>Put community SteamID64s in <code>js/config.js</code>.</p></div></li>
+              <li><span class="setup-number">02</span><div><strong>Add community servers</strong><p>Enter server IDs and join codes in the same config file.</p></div></li>
+              <li><span class="setup-number">03</span><div><strong>Publish with GitHub Pages</strong><p>This first version is a static site—no secret keys required.</p></div></li>
+            </ul>
+          </section>
+        </div>
+        <div class="source-note">Player statistics provided by <a href="https://wardogstracker.gg" target="_blank" rel="noreferrer">WARDOGS Tracker</a>. Public profiles only; hidden balances remain hidden.</div>
+      </section>
+
+      <section id="view-players" class="view">
+        <div class="section-heading">
+          <div><div class="eyebrow">ROSTER INTELLIGENCE</div><h2>Player directory</h2><p class="section-subtitle">Search public profiles or look up a player by SteamID64.</p></div>
+        </div>
+        <form id="player-search-form" class="search-bar">
+          <span class="search-symbol">⌕</span>
+          <input id="player-search" type="search" placeholder="Search loaded players by name or SteamID…" aria-label="Search players">
+          <button class="button button-primary" type="submit">LOOK UP STEAM ID</button>
+        </form>
+        <div id="lookup-message" class="inline-message" aria-live="polite"></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>PLAYER</th><th>LEVEL</th><th>CASH</th><th>GOLD</th><th>UNLOCKS</th><th>SYNCED</th><th></th></tr></thead>
+            <tbody id="players-table"><tr><td colspan="7" class="empty-state">Loading player data…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="table-foot"><span id="players-count">Showing public profiles</span><span>Source: WARDOGS Tracker</span></div>
+      </section>
+
+      <section id="view-wealth" class="view">
+        <div class="section-heading">
+          <div><div class="eyebrow">COMMUNITY COMPETITION</div><h2>Wealth rankings</h2><p class="section-subtitle">Compare publicly visible cash and gold balances.</p></div>
+          <div class="sort-switch" role="group" aria-label="Sort leaderboard">
+            <button class="sort-button active" data-sort="cash">CASH</button><button class="sort-button" data-sort="gold">GOLD</button><button class="sort-button" data-sort="level">LEVEL</button>
+          </div>
+        </div>
+        <div class="leaderboard-banner"><div><div class="eyebrow">GLOBAL PUBLIC LEADERBOARD</div><strong id="leaderboard-title">Highest cash balances</strong></div><span class="banner-mark">W</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>RANK</th><th>PLAYER</th><th>LEVEL</th><th>CASH</th><th>GOLD</th><th>PROFILE</th></tr></thead>
+            <tbody id="wealth-table"><tr><td colspan="6" class="empty-state">Loading leaderboard…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="source-note">Rankings include players returned by the public API, not every person who owns the game. Players who have not synced or who hide stats may not appear.</div>
+      </section>
+
+      <section id="view-servers" class="view">
+        <div class="section-heading">
+          <div><div class="eyebrow">DEPLOYMENT MAP</div><h2>Community servers</h2><p class="section-subtitle">Configured server status and join details. Add your servers in <code>js/config.js</code>.</p></div>
+          <button class="button button-quiet" id="refresh-servers">REFRESH STATUS ↻</button>
+        </div>
+        <div id="server-grid" class="server-grid"></div>
+        <div class="source-note">Server status is provided by <a href="https://wardogsnow.com/developers/stats-api" target="_blank" rel="noreferrer">WARDOGS NOW's public stats API</a> where enabled by the server owner. A join code can be copied; direct launching depends on game support.</div>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="footer-brand"><span class="brand-mark small">W</span><span>WARDOGS COMMUNITY HUB</span></div><span>COMMUNITY PROJECT · VERSION 0.1</span><span>Not affiliated with the game developers.</span></footer>
+  </div>
+
+  <dialog id="player-dialog" class="player-dialog">
+    <button class="dialog-close" id="close-player-dialog" aria-label="Close profile">×</button>
+    <div id="player-detail-content"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
